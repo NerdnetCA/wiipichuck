@@ -36,9 +36,15 @@ void DuinoChuc::readData() {
     }
     this->b_z = buf[5] & 0x01;
     this->b_c = (buf[5] & 0x02) >>1;
-    this->accelX = (uint16_t)buf[2]<<2 | (((uint16_t)buf[5] >> 2) & 0x03);
-    this->accelY = (uint16_t)buf[3]<<2 | (((uint16_t)buf[5] >> 4) & 0x03);
-    this->accelZ = (uint16_t)buf[4]<<2 | (((uint16_t)buf[5] >> 6) & 0x03);
+    this->accelX = (int16_t)( 
+        (uint16_t)buf[2]<<2 | (((uint16_t)buf[5] >> 2) & 0x03)
+        )-512;
+    this->accelY = (int16_t)(
+        (uint16_t)buf[3]<<2 | (((uint16_t)buf[5] >> 4) & 0x03)
+        )-512;
+    this->accelZ = (int16_t)(
+        (uint16_t)buf[4]<<2 | (((uint16_t)buf[5] >> 6) & 0x03)
+        )-512;
     this->joyX = buf[0];
     this->joyY = buf[1];
     
